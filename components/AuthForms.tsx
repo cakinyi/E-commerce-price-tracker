@@ -26,7 +26,7 @@ const AuthForm = () => {
     setToken(cookies.get('token'));
     const defaultActiveLink = getActiveLink || 'login';
     setActiveForm((prevActiveForm) => prevActiveForm || defaultActiveLink);
-  }, []);
+  }, [cookies]);
 
     if(activeLink === '' || activeLink === null || activeLink === undefined){
         activeLink = 'login';

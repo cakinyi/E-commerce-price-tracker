@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import Cookies from "universal-cookie";
+import { useEffect, useState } from 'react';
 
 const navIcons = [
   { src: '/assets/icons/search.svg', alt: 'search' },
@@ -7,7 +9,33 @@ const navIcons = [
   { src: '/assets/icons/user.svg', alt: 'user' },
 ]
 
+
 const Navbar = () => {
+
+  const cookies = new Cookies();
+  const [token, setToken] = useState('');
+
+  const handleLogout = () =>{
+    cookies.set('token', '');
+    window.location.reload();
+  }
+
+  useEffect(() => {
+    setToken(cookies.get('token'));
+  }, []);
+
+  let logoutBtn;
+
+  if(token === '' || token === null || token === undefined){
+    logoutBtn = '';
+  }else{
+    logoutBtn = (
+      <button onClick={handleLogout} style={{backgroundColor: '#000', color: '#fff', borderRadius: '5px', padding: '5px 10px'}}>
+      log out
+    </button>
+    )
+  }
+
   return (
     <header className='w-full'>
       <nav className='nav'>
@@ -37,6 +65,8 @@ const Navbar = () => {
             />
 
           ))}
+
+          {logoutBtn}
         </div>
 
       </nav>

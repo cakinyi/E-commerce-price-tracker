@@ -1,3 +1,4 @@
+
 import { getProductById, getSimilarProducts } from "@/lib/actions"
 import { redirect } from "next/navigation";
 import Image from "next/image";

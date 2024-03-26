@@ -7,6 +7,7 @@ import { getAllProducts } from "@/lib/actions"
 import ProductCard from "@/components/ProductCard"
 import { supabase } from "../lib/client";
 import Cookies from "universal-cookie";
+import Navbar from "@/components/Navbar";
 
 const AuthForm = () => {
   const cookies = new Cookies();
@@ -32,24 +33,25 @@ const AuthForm = () => {
         activeLink = 'login';
     }
 
-    async function handleLogin(e){
-        e.preventDefault()
-    
-        try {
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: email,
-                password: password,
-              })
-    
-          if (error) throw error
-          console.log(data)
-          setToken(data)
-          setToken(cookies.get('sb-access-token'));
-          cookies.set('token', 'token');
-        } catch (error) {
-          alert(error)
-        }
+    async function handleLogin(e) {
+      e.preventDefault()
+  
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
+        })
+  
+        if (error) throw error
+        console.log(data)
+        setToken(data)
+        setToken(cookies.get('sb-access-token'));
+        cookies.set('token', 'token');
+      } catch (error) {
+        alert(error)
       }
+    }
+  
     
       async function handleSignUp(e){
         e.preventDefault()
@@ -75,10 +77,10 @@ const AuthForm = () => {
         }
       }
     
-
     console.log(token);
   return (
     <>
+        <Navbar />
         {token === 'token' ? (
           <>
           <section className="px-6 md:px-20 py-24">

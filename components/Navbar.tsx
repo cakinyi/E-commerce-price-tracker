@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from 'next/link';
+import Image from 'next/image';
 import Cookies from "universal-cookie";
 import { useEffect, useState } from 'react';
 
@@ -7,11 +7,9 @@ const navIcons = [
   { src: '/assets/icons/search.svg', alt: 'search' },
   { src: '/assets/icons/black-heart.svg', alt: 'heart' },
   { src: '/assets/icons/user.svg', alt: 'user' },
-]
-
+];
 
 const Navbar = () => {
-
   const cookies = new Cookies();
   const [token, setToken] = useState('');
 
@@ -22,7 +20,7 @@ const Navbar = () => {
 
   useEffect(() => {
     setToken(cookies.get('token'));
-  }, []);
+  }, [cookies]); // Include cookies in the dependency array
 
   let logoutBtn;
 
@@ -50,7 +48,6 @@ const Navbar = () => {
           <p className='nav-logo'>
             E-commerce<span className=' text-primary'>PriceTracker</span>
           </p>
-
         </Link>
 
         <div className='flex items-center gap-5'>
@@ -63,15 +60,12 @@ const Navbar = () => {
               height={28}
               className='object-contain'
             />
-
           ))}
-
           {logoutBtn}
         </div>
-
       </nav>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

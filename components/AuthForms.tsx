@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Image from "next/image"
 import Searchbar from "@/components/Searchbar"
 import HeroCarousel from "@/components/HeroCarousel"
@@ -10,7 +10,7 @@ import Cookies from "universal-cookie";
 import Navbar from "@/components/Navbar";
 
 const AuthForm = () => {
-  const cookies = new Cookies();
+  const cookies = useMemo(() => new Cookies(), []); // Initialize cookies object using useMemo
   const[token, setToken] = useState('');
   const[email, setEmail] = useState('');
   const[password, setPassword] = useState('');
@@ -23,11 +23,11 @@ const AuthForm = () => {
   const [allProducts, setAllProducts] = useState([]);
 
   useEffect(() => {
-    const getActiveLink = cookies.get('activeLink');    
-    setToken(cookies.get('token'));
-    const defaultActiveLink = getActiveLink || 'login';
+    const getActiveLink = cookies.get("activeLink");
+    setToken(cookies.get("token"));
+    const defaultActiveLink = getActiveLink || "login";
     setActiveForm((prevActiveForm) => prevActiveForm || defaultActiveLink);
-  }, [cookies]);
+  }, [cookies]); // Include cookies in the dependency array
 
     if(activeLink === '' || activeLink === null || activeLink === undefined){
         activeLink = 'login';

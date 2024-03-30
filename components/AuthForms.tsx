@@ -197,7 +197,7 @@ const AuthForm = () => {
                         </div>
 
                         <div className="text-grey-dark mt-6">
-                            Don't have an account?<br/> 
+                            Don&apos;t have an account?<br/> 
                             <a className="no-underline border-b border-blue text-blue" href="#" onClick={()=>{cookies.set('activeLink', 'signup'); window.location.reload();}}>
                                 Sign Up
                             </a>.

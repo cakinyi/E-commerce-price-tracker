@@ -33,7 +33,7 @@ const AuthForm = () => {
         activeLink = 'login';
     }
 
-    async function handleLogin(e) {
+    async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
       e.preventDefault()
   
       try {
@@ -44,7 +44,6 @@ const AuthForm = () => {
   
         if (error) throw error
         console.log(data)
-        setToken(data)
         setToken(cookies.get('sb-access-token'));
         cookies.set('token', 'token');
       } catch (error) {
@@ -53,7 +52,7 @@ const AuthForm = () => {
     }
   
     
-      async function handleSignUp(e){
+      async function handleSignUp(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
         e.preventDefault()
     
         try {

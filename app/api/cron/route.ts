@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
+
+import { getLowestPrice, getHighestPrice, getAveragePrice, getEmailNotifType } from "@/lib/utils";
 import { connectToDB } from "@/lib/mongoose";
 import Product from "@/lib/models/product.model";
 import { scrapeAmazonProduct } from "@/lib/scraper";
 import { generateEmailBody, sendEmail } from "@/lib/nodemailer";
-import { getLowestPrice, getHighestPrice, getAveragePrice, getEmailNotifType } from "@/lib/utils";
 
-export const maxDuration = 10; // This function can run for a maximum of 300 seconds
+export const maxDuration = 300; // This function can run for a maximum of 300 seconds
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -49,7 +50,10 @@ export async function GET(request: Request) {
         );
 
         // ======================== 2 CHECK EACH PRODUCT'S STATUS & SEND EMAIL ACCORDINGLY
-        const emailNotifType = getEmailNotifType(scrapedProduct, currentProduct);
+        const emailNotifType = getEmailNotifType(
+          scrapedProduct,
+          currentProduct
+        );
 
         if (emailNotifType && updatedProduct.users.length > 0) {
           const productInfo = {
@@ -76,24 +80,3 @@ export async function GET(request: Request) {
     throw new Error(`Failed to get all products: ${error.message}`);
   }
 }
-
-// Additional Functionality
-
-// You can add new functionalities here
-// For example, a function to handle a POST request
-export async function POST(request: Request) {
-  try {
-    const requestBody = await request.json();
-
-    // Handle the POST request here
-    // For example, process the data from the request and perform necessary actions
-
-    return NextResponse.json({
-      message: "POST request handled successfully",
-      requestBody: requestBody,
-    });
-  } catch (error: any) {
-    throw new Error(`Failed to handle POST request: ${error.message}`);
-  }
-}
-

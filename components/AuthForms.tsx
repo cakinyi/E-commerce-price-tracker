@@ -36,17 +36,30 @@ const AuthForm = () => {
     async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
       e.preventDefault()
   
-      try {
+      try 
+      {
         const { data, error } = await supabase.auth.signInWithPassword({
           email: email,
           password: password,
         })
   
         if (error) throw error
+
         console.log(data)
         setToken(cookies.get('sb-access-token'));
         cookies.set('token', 'token');
-      } catch (error) {
+        // redirect
+
+            const getActiveLink = cookies.get("activeLink");
+            setToken(cookies.get("token"));
+            const defaultActiveLink = getActiveLink || "login";
+            setActiveForm((prevActiveForm) => prevActiveForm || defaultActiveLink);
+
+        //
+        
+      } 
+      catch (error) 
+      {
         alert(error)
       }
     }
